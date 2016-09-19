@@ -74,7 +74,7 @@ var map = new ol.Map({
   // Improve user experience by loading tiles while animating. Will make
   // animations stutter on mobile or slow devices.
   loadTilesWhileAnimating: true,
-  target: 'map',
+  target: document.getElementById('map'),
   controls: ol.control.defaults({
     attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
       collapsible: false
@@ -187,4 +187,15 @@ buttonZagreb.click(function(){
 
 buttonAthens.click(function() {
   go(pentagon, athensFeature, pentagonFeature);
+});
+
+// change mouse cursor when over marker
+map.on('pointermove', function(e) {
+  if (e.dragging) {
+    $(element).popover('destroy');
+      return;
+    }
+  var pixel = map.getEventPixel(e.originalEvent);
+  var hit = map.hasFeatureAtPixel(pixel);
+  map.getTarget().style.cursor = hit ? 'pointer' : '';
 });

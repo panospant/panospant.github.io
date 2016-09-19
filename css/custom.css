@@ -220,3 +220,6 @@ hr {
 .center{
 	text-align: center;
 }
+.underEachother{
+	display: block;
+}
