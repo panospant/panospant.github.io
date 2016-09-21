@@ -46,7 +46,7 @@ var iconStyle = new ol.style.Style({
     anchor: [0.5, 46],
     anchorXUnits: 'fraction',
     anchorYUnits: 'pixels',
-    src: 'http://openlayers.org/en/v3.18.2/examples/data/icon.png'
+    src: '../icon.png'
   }))
 });
 
