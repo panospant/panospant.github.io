@@ -4,11 +4,13 @@ var piraeus = ol.proj.fromLonLat([23.652674,37.94171]);
 var zagreb = ol.proj.fromLonLat([15.978928,45.800084]);
 var athens = ol.proj.fromLonLat([23.7275,37.9838]);
 var pentagon = ol.proj.fromLonLat([23.782665,37.999707]);
+var interamerican = ol.proj.fromLonLat([23.696065,37.942180]);
 var buttonPeristeri = $('<button>Start the Journey!</button>');
 var buttonPiraeus = $('<button>Studied in University of Piraeus from 2009 to 2012 and 2013 to 2015. Wonder where I was from 2012 to 2013?</button>');
 var buttonZagreb = $('<button>Participated in the Erasmus program for both studies and internship. Next station?</button>');
 var buttonAthens = $('<button>Back home! The last 6 months of my studies I was working in Velti, while finishing my thesis. Now for the final stop...</button>'); 
-var buttonPentagon = $('<strong><i>Worked as a programmer for the Hellenic Army at the Center of Information Support. Here our journey ends and we reach the present!</strong></i>');
+var buttonPentagon = $('<button>Worked as a programmer for the Hellenic Army at the Center of Information Support.</button>');
+var buttonInteramerican = $('<strong><i>Currently working as a software engineer in Interamerican.  Here our journey ends and we reach the present!</i></strong>');
 
 var view = new ol.View({
   // the view's initial state
@@ -41,6 +43,11 @@ var pentagonFeature = new ol.Feature({
   name: 'Pentagon'
 });
 
+var interamericanFeature = new ol.Feature({
+  geometry: new ol.geom.Point(interamerican),
+  name: 'Interamerican'
+});
+
 var iconStyle = new ol.style.Style({
   image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
     anchor: [0.5, 46],
@@ -55,6 +62,7 @@ piraeusFeature.setStyle(iconStyle);
 zagrebFeature.setStyle(iconStyle);
 athensFeature.setStyle(iconStyle);
 pentagonFeature.setStyle(iconStyle);
+interamericanFeature.setStyle(iconStyle);
 
 var vectorSource = new ol.source.Vector({
   features: [peristeriFeature]
@@ -133,7 +141,13 @@ map.on('click', function(evt) {
           'html': true,
           'content': buttonPentagon
         });
-      }
+      } else if(feature.get('name') === 'Interamerican'){
+        $(element).popover({
+          'placement': 'top',
+          'html': true,
+          'content': buttonInteramerican
+        });
+      } 
       $(element).popover('show');
     } else {
       $(element).popover('destroy');
@@ -187,6 +201,10 @@ buttonZagreb.click(function(){
 
 buttonAthens.click(function() {
   go(pentagon, athensFeature, pentagonFeature);
+});
+
+buttonPentagon.click(function() {
+  go(interamerican, pentagonFeature, interamericanFeature);
 });
 
 // change mouse cursor when over marker
